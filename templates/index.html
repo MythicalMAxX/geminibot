@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+</head>
+<body>
+    <h1>Chat with Gemini</h1>
+    <div id="chatbox" style="border:1px solid #ccc; padding:10px; height:300px; overflow-y:scroll;"></div>
+    <input type="text" id="message" style="width:95%;" placeholder="Type your message here..." />
+    <button onclick="sendMessage()">Send</button>
+</body>
+<script>
+    async function sendMessage(){
+        const message = document.getElementById('message').value;
+        const response = await fetch('/api/generate',{
+            method = 'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({contents:message})
+        });
+        const data = await response.json();
+        document.getElementById('chatbox').innexHTML += `<p><Strong>User:</strong> ${message}</p>`;
+        document.getElementById('chatbox').innexHTML += `<p><Strong>Bot:</strong> ${data.text}</p>`;
+        document.getElementById('message').value = '';
+    }
+</script>
+</html>
+<script>
+    async function sendMessage(){
+        const message = document.getElementById('message').value;
+        const response = await fetch('/api/generate',{
+            method: 'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({contents:message})
+        });
+        const data = await response.json();
+        document.getElementById('chatbox').innerHTML += `<p><Strong>User:</strong> ${message}</p>`;
+        document.getElementById('chatbox').innerHTML += `<p><Strong>Bot:</strong> ${data.text}</p>`;
+        document.getElementById('message').value = '';
+    }
+</script>
